@@ -1,5 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 # fvb 
-def welecom(request):
-    return HttpResponse('hello')
+def Hello(request,first_name,age):
+    return HttpResponse(f'hello {first_name} your age is {age}')
