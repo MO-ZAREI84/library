@@ -14,7 +14,7 @@ def index(request):
 def Authors(request):
     if request.method=='GET':
         authors=Author.objects.values()
-        return render(request,'author.html',{'Authors':authors})
+        return render(request,'authors.html',{'Authors':authors})
     
     if request.method=='POST':
         form= AuthorForm(request.POST)
@@ -23,4 +23,18 @@ def Authors(request):
         name=form.cleaned_data['name']
         Author.objects.create(name=name)
         return HttpResponse(f'author created {name=}')
+    return HttpResponse('method not allowed')
+@csrf_exempt
+def new_authors(request):
+    if request.method== 'GET':
+        authors=AuthorForm()
+    return render (request, 'new_author.html',{'authors_form':authors})
+
+    if request.method == 'POST':
+        form=AuthorForm(request.POST)
+        if not form.is_valid():
+            HttpResponse(form.errors)
+        name=form.cleaned_data['name']
+        Author.objects.create(name=name)
+        return HttpResponse(f'your authors are created {name=}')
     return HttpResponse('method not allowed')
