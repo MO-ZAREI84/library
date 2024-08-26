@@ -1,15 +1,19 @@
 from django.db import models
+
 class BookManager(models.Manager):
-    def archived_exluded_queryset(self):
+    def archived_excluded_queryset(self):
         return self.filter(archived=False)
-class Author (models.Model):
-    name=models.CharField(max_length=10)
+
+class Author(models.Model):
+    name = models.CharField(max_length=10)
 
 class Book(models.Model):
-    title=models.CharField(max_length=20)
-    authors=models.ManyToManyField(Author)
+    title = models.CharField(max_length=20)
+    authors = models.ManyToManyField(Author)
     archived = models.BooleanField(default=False)
+    
     objects = BookManager()
+
 # برای وارد کردن دیتا many to many
 # >>> Author5=Author.objects.create(name='mostafa')
 # >>> book.authors.add(Author5)

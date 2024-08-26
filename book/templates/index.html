@@ -1,8 +1,23 @@
-{%load static%}
-<html>
+{% load static %}
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booklist</title>
+</head>
 <body>
-    <h1>hellloo my friends{{book}}</h1>
-    <img src="{% static 'images.jpg' %}"/>
+<h3>Books</h3>
+<div>
+    {% for book in books %}
+        <p>
+            {% for author in book.authors %}
+                {{ author.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %} 
+            wrote {{ book.title }}.
+        </p>
+    {% endfor %}
+</div>
 </body>
 </html>
+
+    

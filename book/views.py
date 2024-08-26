@@ -7,5 +7,5 @@ from .models import Book
 def Hello(request,first_name,age):
     return HttpResponse(f'hello {first_name} your age is {age}')
 def index(request):
-    book=Book.objects.get(id=5)
-    return render (request,'index.html',{'book':book})
+    book=Book.objects.all()
+    return render (request,'index.html',{'books':book})
