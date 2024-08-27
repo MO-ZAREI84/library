@@ -33,4 +33,9 @@ class Profile(models.Model):
     phone_number=models.IntegerField()
 
 class Person(models.Model):
+    Gender_Choices=[
+        ('f','female'),
+        ('m','male'),
+    ]
     profile=models.OneToOneField(Profile,on_delete=models.CASCADE)
+    gender=models.CharField(max_length=10,choices=Gender_Choices,default='m')

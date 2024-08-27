@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Book, Author
 from .forms import AuthorForm
-
+from django.views import View
 def Hello(request, first_name, age):
     return HttpResponse(f'hello {first_name} your age is {age}')
 
@@ -44,3 +44,11 @@ def new_authors(request):
         return HttpResponse(f'your authors are created {name=}')
     
     return HttpResponse('method not allowed')
+def Author_list(request):
+    authors=Authors.objects.all()
+    return render(request,'authors_list.html',{
+        'authors':authors
+    })
+class HelloView(View):
+    def get(self,request):
+       return HttpResponse('hello')
