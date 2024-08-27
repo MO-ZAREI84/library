@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Book, Author
 from .forms import AuthorForm
 from django.views import View
+from django.views.generic import ListView
 def Hello(request, first_name, age):
     return HttpResponse(f'hello {first_name} your age is {age}')
 
@@ -52,3 +53,10 @@ def Author_list(request):
 class HelloView(View):
     def get(self,request):
        return HttpResponse('hello')
+class AuthorListView(ListView):
+    model=Author
+    template_name='author_list_view.html'
+    # default context is object_list 
+    context_object_name='authors'
+    paginate_by=3
+    
