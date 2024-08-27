@@ -10,9 +10,7 @@
 <div>
     {% for book in books %}
         <p>
-            {% for author in book.authors %}
-                {{ author.name }}{% if not forloop.last %}, {% endif %}
-            {% endfor %} 
+        
             wrote {{ book.title }}.
         </p>
     {% endfor %}
