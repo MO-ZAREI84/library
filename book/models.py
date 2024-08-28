@@ -16,6 +16,7 @@ class Book(models.Model):
     archived = models.BooleanField(default=False)
     publication_date = models.DateTimeField(default=datetime.fromisoformat("2023-08-28T10:45:00"))
     pages_count = models.IntegerField(default=12)
+    price=models.IntegerField(default ='13333')
 
 class Profile(models.Model):
     email = models.EmailField(default='default@example.com')

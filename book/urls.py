@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Hello,index,Authors,new_authors,Author_list,HelloView,AuthorListView,library,user_list
+from .views import Hello,index,Authors,new_authors,Author_list,HelloView,AuthorListView,library,user_list,register,login
 urlpatterns = [
     path('hello/<str:first_name>/<int:age>/',Hello),
     path('html/',index),
@@ -10,5 +10,7 @@ urlpatterns = [
     path('Author_list_view',AuthorListView.as_view()),
     # path('library/<int=id>/',library)
     # path('authorlist/<int:id>/',author_detail)
-    path('users/',user_list)
+    path('users/',user_list),
+    path('register/',register),
+    path('login/',login)
 ]

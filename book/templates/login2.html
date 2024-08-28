@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به فروشگاه لباس</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-content">
+            <h1>ورود به فروشگاه لباس</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="login-btn">ورود</button>
+            </form>
+            <div class="forgot-password">
+                <a href="#">فراموشی رمز عبور</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
