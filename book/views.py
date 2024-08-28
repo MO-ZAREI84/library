@@ -5,6 +5,11 @@ from .models import Book, Author
 from .forms import AuthorForm
 from django.views import View
 from django.views.generic import ListView
+from rest_framework.decorators import api_view
+
+from rest_framework.response import Response
+import json
+from django.contrib.auth.models import User
 def Hello(request, first_name, age):
     return HttpResponse(f'hello {first_name} your age is {age}')
 
@@ -30,6 +35,7 @@ def Authors(request):
     return HttpResponse('method not allowed')
 
 @csrf_exempt
+
 def new_authors(request):
     if request.method == 'GET':
         authors_form = AuthorForm()  # تغییر نام متغیر برای وضوح
@@ -59,4 +65,18 @@ class AuthorListView(ListView):
     # default context is object_list 
     context_object_name='authors'
     paginate_by=3
+@csrf_exempt
+@api_view(['GET'])
+def library (request,library_id):
+    library=Library.objects.get(id=library_id)
     
+    if request.method =='GET':
+        response={"id":library.id,"number":library.number}
+        return Response(data=response)
+    if request.method == 'DELETE':
+        library.delete()
+        return HttpResponse('delet')
+
+def user_list(request):
+    users=User.objects.all()
+    return render(request,'user_list.html',{'users':users})

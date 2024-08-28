@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class BookManager(models.Manager):
     def archived_excluded_queryset(self):
@@ -6,36 +7,27 @@ class BookManager(models.Manager):
 
 class Author(models.Model):
     name = models.CharField(max_length=10)
+    def __str__(self):
+        return self.name
 
 class Book(models.Model):
     title = models.CharField(max_length=20)
     authors = models.ManyToManyField(Author)
     archived = models.BooleanField(default=False)
-    
-    objects = BookManager()
+    publication_date = models.DateTimeField(default=datetime.fromisoformat("2023-08-28T10:45:00"))
+    pages_count = models.IntegerField(default=12)
 
-# برای وارد کردن دیتا many to many
-# >>> Author5=Author.objects.create(name='mostafa')
-# >>> book.authors.add(Author5)
-# >>> books=Book.objects.all()
-# >>> for book in books:
-# ...     author_names=book.authors.values_list('name',flat=True)
-# ...     print(f"book:{book.title} authors={author_names}")
-# ...
-# book:saa authors=<QuerySet []>
-# book:My First Book authors=<QuerySet ['Author1', 'Author2']>
-# book:pirmard va darya authors=<QuerySet ['tolsoi']>
-# book:1984 authors=<QuerySet ['jorj']>
-# book:sahab authors=<QuerySet ['mostafa']>
-    
 class Profile(models.Model):
-    email=models.EmailField(default='default@example.com')
-    phone_number=models.IntegerField()
+    email = models.EmailField(default='default@example.com')
+    phone_number = models.IntegerField()
 
 class Person(models.Model):
-    Gender_Choices=[
-        ('f','female'),
-        ('m','male'),
+    Gender_Choices = [
+        ('f', 'female'),
+        ('m', 'male'),
     ]
-    profile=models.OneToOneField(Profile,on_delete=models.CASCADE)
-    gender=models.CharField(max_length=10,choices=Gender_Choices,default='m')
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=10, choices=Gender_Choices, default='m')
+
+class Library(models.Model):
+    number = models.CharField(max_length=12)
