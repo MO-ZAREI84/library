@@ -96,16 +96,18 @@ def register(request):
         return HttpResponse('user created')
     return HttpResponse('method is not allowed')
 def login(request):
-    # تعریف فرم به عنوان یک متغیر خالی برای هر دو حالت
-    form = AuthenticationForm()
-
+    if request.method =='GET':
+        form = AuthenticationForm()
+        return render(request, 'login2.html', {'form': form})
+        
+        
+    
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                auth_login(request, user)
-                return HttpResponse('users')  # یا هر URL دیگری که بعد از ورود به آن بروید
-    
+        if not form.is_valid():
+            return render(request, 'login2.html', {'form': form}) 
+        user=form.get_user()
+        auth_login(request, user)
+        return HttpResponse('your loged in')  # یا هر URL دیگری که بعد از ورود به آن بروید
+                
     # در هر دو حالت GET و POST فرم به قالب ارسال می‌شود
-    return render(request, 'login2.html', {'form': form})
