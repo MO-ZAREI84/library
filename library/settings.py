@@ -135,3 +135,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

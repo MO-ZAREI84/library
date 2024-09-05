@@ -111,3 +111,24 @@ def login(request):
         return HttpResponse('your loged in')  # یا هر URL دیگری که بعد از ورود به آن بروید
                 
     # در هر دو حالت GET و POST فرم به قالب ارسال می‌شود
+def change_password(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return HttpResponse('Please login first')
+
+        old_password = request.POST['old_password']
+        new_password1 = request.POST['new_password1']
+        new_password2 = request.POST['new_password2']
+
+        if not request.user.check_password(old_password):
+            return HttpResponse('Wrong old password')
+
+        if new_password1 != new_password2:
+            return HttpResponse('Entered passwords are not identical')
+
+        request.user.set_password(new_password1)
+        request.user.save()
+
+        return HttpResponse('Password changed successfully!')
+
+    return HttpResponse('Only post method allowed')
