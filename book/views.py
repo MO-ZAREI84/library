@@ -11,6 +11,12 @@ from rest_framework.response import Response
 import json
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .Serializer import BookSerializer
+from rest_framework import status
+from rest_framework.mixins import  ListModelMixin, CreateModelMixin
+from rest_framework.generics import GenericAPIView
 
 def Hello(request, first_name, age):
     return HttpResponse(f'hello {first_name} your age is {age}')
@@ -132,3 +138,25 @@ def change_password(request):
         return HttpResponse('Password changed successfully!')
 
     return HttpResponse('Only post method allowed')
+class BookListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        name = data.get("name")
+        author = data.get("author")
+        book = Book.objects.create(name=name, author=author) # ساختن کتاب
+        serializer = BookSerializer(book) # ترجمه به json
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+class BookListCreateAPIView(GenericAPIView, ListModelMixin, CreateModelMixin):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
