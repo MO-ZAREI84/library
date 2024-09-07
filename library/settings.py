@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'book',
     'debug_toolbar',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

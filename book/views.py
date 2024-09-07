@@ -160,3 +160,11 @@ class BookListCreateAPIView(GenericAPIView, ListModelMixin, CreateModelMixin):
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+class HelloView2(APIView):
+    def get(self,request):
+        return Response({'mess': "hello"})
+    def post(self,request):
+        if request.is_authenticated:
+            return Response({'message':"you posted smth"})
+        return Response({"premission":"you are premission"})

@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import Hello,index,Authors,new_authors,Author_list,HelloView,AuthorListView,library,user_list,register,login,change_password
+from .views import Hello,index,Authors,new_authors,Author_list,HelloView,AuthorListView,library,user_list,register,login,change_password,HelloView2
+from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     path('hello/<str:first_name>/<int:age>/',Hello),
     path('html/',index),
@@ -14,4 +15,6 @@ urlpatterns = [
     path('register/',register),
     path('login/',login),
     path('change-password/', change_password),
+    path('hello/',HelloView2.as_view),
+    path('login2/',obtain_auth_token),
 ]
