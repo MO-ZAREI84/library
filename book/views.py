@@ -16,7 +16,11 @@ from rest_framework.response import Response
 from .Serializer import BookSerializer
 from rest_framework import status
 from rest_framework.mixins import  ListModelMixin, CreateModelMixin
-from rest_framework.generics import GenericAPIView
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import BasePermission
+
 
 def Hello(request, first_name, age):
     return HttpResponse(f'hello {first_name} your age is {age}')
@@ -151,15 +155,7 @@ class BookListAPIView(APIView):
         book = Book.objects.create(name=name, author=author) # ساختن کتاب
         serializer = BookSerializer(book) # ترجمه به json
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-class BookListCreateAPIView(GenericAPIView, ListModelMixin, CreateModelMixin):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
 
 class HelloView2(APIView):
     def get(self,request):
